@@ -23,9 +23,14 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Student>> GetStudent(int id)
+    public async Task<ActionResult<Student>> GetStudent(string nome, string email)
     {
-        var student = await _context.Students.FindAsync(id);
+        var student = await _context.Students.FindAsync(nome, email);
+
+        if (student is null)
+        {
+            return NotFound();
+        }
 
         return Ok(student);
     }

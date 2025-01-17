@@ -20,23 +20,23 @@ public class CurseController : ControllerBase
     [HttpGet("Student")]
     public async Task <ActionResult<IEnumerable<Curse>>> GetCurses()
     {
-        var curse = await _context.Curses.Include(x => x.Student).ToListAsync();
+        var allCurses = await _context.Curses.Include(x => x.Student).ToListAsync();
         
-        return Ok(curse);
+        return Ok(allCurses);
     }
 
     [HttpGet("{id}")]
 
     public async Task<ActionResult<Curse>> GetCurse(int id)
     {
-        var curse = await _context.Curses.FindAsync(id);
+        var onlyCurse = await _context.Curses.FindAsync(id);
 
-        if (curse is null)
+        if (onlyCurse is null)
         {
             return NotFound();
         }
 
-        return Ok(curse);
+        return Ok(onlyCurse);
     }
 
     [HttpPut("{id}")]
